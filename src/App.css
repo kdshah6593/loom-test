@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+/* Button CSS */
+.button-base {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 6px;
+  width: fit-content;
+  font-weight: 600;
+}
+
+.action-button {
+  margin-right: 10px;
+  background-color: #516bf0;
+  color: #fff;
+}
+
+.reset-button {
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #516bf0;
+  color: #516bf0;
+}
+
+.button-base.disabled {
+  background-color: #929EAA;
+  color: #fff;
+  cursor: default;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
