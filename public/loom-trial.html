@@ -9,6 +9,20 @@
 </head>
 <body>
     <h1>Hello world!</h1>
-    <p>This works!</p>
+
+    <div id="video">
+        <button id="video-btn">Get Video!</button>
+    </div>
+    <script>
+        const vid = document.getElementById("video-btn")
+        vid.addEventListener("click", getVideo);
+        
+        async function getVideo() {
+            console.log("I'm clicked")
+            const a = await loom.textReplace("https://www.loom.com/share/346d88ccccad486cb09079edf8a492a2")
+            const vidDiv = document.getElementById("video")
+            vidDiv.innerHTML += a;
+        }
+    </script>
 </body>
 </html>
