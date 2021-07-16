@@ -4,24 +4,203 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdn.loom.com/loom-embed/v1.1.4/sdk.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello world!</h1>
+    
+    <div id="container">
+        <h1>Avestor</h1>
+        <br>
+        <div id="slices-header">
+            <h3 id="slices-title">Allocate Investment Slices</h3>
+            <div id="slices-header-buttons">
+                <a href="https://www.loom.com/embed/49f7a712b0ef4a1c91b6393d3c6c0671" target="_blank"><button><i class="material-icons">videocam</i> Help Video (New Tab)</button></a>
+                <button id="video-btn"><i class="material-icons">videocam</i> Help Video (Embedded)</button>
+                <button id="video-modal-btn"><i class="material-icons">videocam</i> Help Video (Modal)</button>
+            </div>
+        </div>
+        <div id="slices-body">
+            <br>
+            <form id="slices-form">
+                <label for="mini-fund">Mini fund:</label>
+                <select id="mini-fund" name="mini-fund">
+                    <option value="ariel">Avestor Ariel, LP</option>
+                </select>
 
-    <div id="video">
-        <button id="video-btn">Get Video!</button>
+                <label for="investor">Investor:</label>
+                <select id="investor" name="investor">
+                    <option value="mary">Mary Johnson</option>
+                    <option value="sam">Sam Jones</option>
+                </select>
+                
+                <label for="balance">Available Balance:</label>
+                <input type="text" id="balance" name="balance"><br><br>
+
+                <label for="allocation-date">Allocation Date:</label>
+                <input type="date" id="start" name="allocation-date" value="2021-07-15" min="2019-01-01" max="2021-12-31">
+
+                <input type="submit" value="Check Duplication Allocation">
+            </form>
+            <br>
+        </div>
     </div>
+    
+    <br>
+    <br>
+
+    <!-- The Video Embedded Using Loom Script -->
+    <div id="video-embed">
+        <p>Embedded video through Share Link will open below here; Click Button Again to Remove</p>
+    </div>
+
+    <br>
+    <!-- The Modal -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>Help Video</h4>
+            <embed type="video/webm" src="https://www.loom.com/embed/49f7a712b0ef4a1c91b6393d3c6c0671" width="400" height="300">
+        </div>
+
+    </div>
+
+    <br>
+
+    <!-- Video Embedded using Embed Tag and Embed URL -->
+    <!-- 
+        Because in the link it uses the word "embed" instead of "share" like the other links, we can use the embed tag directly. 
+        We can toggle seeing this video with a button through JavaScript / CSS
+    -->
+    <p>Using Embed URL from Loom, we can use an embed tag like below</p>
+    <embed type="video/webm" src="https://www.loom.com/embed/49f7a712b0ef4a1c91b6393d3c6c0671" width="400" height="300">
+
+
+    <style>
+        h1 {
+            text-align: center;
+        }
+        
+        #slices-form {
+            border: 1px solid grey;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            padding: 10px;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+        }
+
+        #slices-title {
+            color: grey;
+        }
+
+        #slices-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        #slices-header-buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        button {
+            background-color: cornflowerblue;
+            color: white;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        a:link, a:visited {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Modal CSS */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            align-items: center;
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */
+            align-items: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover, .close:focus {
+            color: red;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+    </style>
+
     <script>
         const vid = document.getElementById("video-btn")
         vid.addEventListener("click", getVideo);
         
         async function getVideo() {
-            console.log("I'm clicked")
-            const a = await loom.textReplace("https://www.loom.com/share/346d88ccccad486cb09079edf8a492a2")
-            const vidDiv = document.getElementById("video")
-            vidDiv.innerHTML += a;
+            const vidOnPage = document.querySelector("#video-embed > iframe:nth-child(2)")
+
+            if (vidOnPage === null) {
+                const a = await loom.textReplace("https://www.loom.com/share/346d88ccccad486cb09079edf8a492a2", {width: 400, height: 300})
+                const vidDiv = document.getElementById("video-embed")
+                vidDiv.innerHTML += a;
+            } else {
+                vidOnPage.remove();
+            }
+        }
+
+
+        // Modal JS
+        // Get the modal & button opens the modal
+        const modal = document.getElementById("video-modal");
+        const modalBtn = document.getElementById("video-modal-btn");
+
+        // Get the <span> element that closes the modal
+        var modalSpan = document.getElementsByClassName("close")[0];
+
+        modalBtn.addEventListener("click", openModal)
+        modalSpan.addEventListener("click", closeModal)
+
+
+        // When the user clicks on the button, open the modal
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        function closeModal() {
+            modal.style.display = "none";
         }
     </script>
 </body>
